@@ -25,10 +25,6 @@ function Board() {
     "4D",
   ]);
 
-  useEffect(() => {
-    console.log("original tiles", tiles);
-  }, []);
-
   function shuffleBoard(array) {
     for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -39,72 +35,35 @@ function Board() {
     return array;
   }
 
+  //explanation: For React to recognize that there was a change in the board and re-render, I had to use the .slice() function. Basically, it changes the references of the array without changing the content. Without it, the contents change, and the references don't change under the hood, so React doesn't recognize it as a change to the state.
   const setBoard = () => {
     let randomizedBoard = shuffleBoard(tiles);
-    setTiles(randomizedBoard);
-    console.log("tiles", tiles);
+    setTiles(randomizedBoard.slice());
+  };
+
+  const row = (tile) => {
+    return (
+      <Col style={{ border: "green" }}>
+        <Tile tile={tile} />
+      </Col>
+    );
   };
 
   return (
     <>
-      {console.log("original tiles", tiles)}
       <Scoreboard setBoard={setBoard} />
       <Container>
         <Row style={{ color: "blue", backgroundColor: "pink" }}>
-          <Col style={{ border: "green" }}>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
+          {tiles.slice(0, 4).map((tile) => row(tile))}
         </Row>
-        <Row>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
+        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+          {tiles.slice(4, 8).map((tile) => row(tile))}
         </Row>
-        <Row>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
+        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+          {tiles.slice(8, 12).map((tile) => row(tile))}
         </Row>
-        <Row>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
-          <Col>
-            <Tile />
-          </Col>
+        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+          {tiles.slice(12, 16).map((tile) => row(tile))}
         </Row>
       </Container>
       <Token />
