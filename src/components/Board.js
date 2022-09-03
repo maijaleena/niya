@@ -4,6 +4,8 @@ import Rules from "./Rules";
 import Scoreboard from "./Scoreboard";
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 function Board() {
   const [tiles, setTiles] = useState([
@@ -43,7 +45,7 @@ function Board() {
 
   const row = (tile) => {
     return (
-      <Col style={{ border: "green" }}>
+      <Col style={{ width: 'w-25'}}>
         <Tile tile={tile} />
       </Col>
     );
@@ -51,26 +53,31 @@ function Board() {
 
   return (
     <>
+      <Container className="mx-auto" style={{width: '200px', textAlign: 'center'  }}>
+        <h1>Niya</h1>
+      </Container>
+      
       <Scoreboard setBoard={setBoard} />
-      <Container>
-        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+
+      <Container className="mx-auto" style={{ marginTop: "10px", height: '840px', width: '860px'}}>
+        <Row style={{  height: '13rem', width: '54rem' }}>
           {tiles.slice(0, 4).map((tile) => row(tile))}
         </Row>
-        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+        <Row style={{  height: '13rem', width: '54rem' }}>
           {tiles.slice(4, 8).map((tile) => row(tile))}
         </Row>
-        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+        <Row style={{  height: '13rem', width: '54rem'  }}>
           {tiles.slice(8, 12).map((tile) => row(tile))}
         </Row>
-        <Row style={{ color: "blue", backgroundColor: "pink" }}>
+        <Row style={{  height: '13rem', width: '54rem'  }}>
           {tiles.slice(12, 16).map((tile) => row(tile))}
         </Row>
       </Container>
-      <Token />
-      <Token />
-      <Token />
-      <Token />
-      <Rules />
+
+      <Container style={{ backgroundColor: 'pink' }}>
+        <Rules />
+      </Container>
+      
     </>
   );
 }

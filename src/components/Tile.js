@@ -1,11 +1,12 @@
 import { FaBeer } from "react-icons/fa";
+import Button from 'react-bootstrap/Button';
 
 function Tile({ tile }) {
   return (
-    <div>
-      <FaBeer />
-      {tile}
-    </div>
+      <Button style={{ height: '12rem', width: '12rem', backgroundColor: 'red'}}>
+        <FaBeer /> 
+        {tile}
+      </Button>
   );
 }
 
