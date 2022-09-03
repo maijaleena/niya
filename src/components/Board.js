@@ -80,9 +80,6 @@ function Board() {
           {tiles.slice(12, 16).map((tile) => row(tile))}
         </Row>
       </Container>
-      <Container>
-        <Token />
-      </Container>
 
       <Container style={{ backgroundColor: "pink" }}>
         <Rules />
