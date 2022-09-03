@@ -4,8 +4,8 @@ import Rules from "./Rules";
 import Scoreboard from "./Scoreboard";
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 function Board() {
   const [tiles, setTiles] = useState([
@@ -37,7 +37,8 @@ function Board() {
     return array;
   }
 
-  //explanation: For React to recognize that there was a change in the board and re-render, I had to use the .slice() function. Basically, it changes the references of the array without changing the content. Without it, the contents change, and the references don't change under the hood, so React doesn't recognize it as a change to the state.
+  //explanation for setBoard function: For React to recognize that there was a change in the board and re-render, I had to use the .slice() function. Basically, .slice() "copies" the array, and while doing so, it changes the references of the array without changing the content. Without .slice(), even though the contents were changed, but the references don't change under the hood, so React doesn't recognize it as a change to the state. React only recognizes changes to references as changes (in terms of re-rendering)
+
   const setBoard = () => {
     let randomizedBoard = shuffleBoard(tiles);
     setTiles(randomizedBoard.slice());
@@ -45,7 +46,7 @@ function Board() {
 
   const row = (tile) => {
     return (
-      <Col style={{ width: 'w-25'}}>
+      <Col style={{ width: "w-25" }}>
         <Tile tile={tile} />
       </Col>
     );
@@ -53,31 +54,39 @@ function Board() {
 
   return (
     <>
-      <Container className="mx-auto" style={{width: '200px', textAlign: 'center'  }}>
+      <Container
+        className="mx-auto"
+        style={{ width: "200px", textAlign: "center" }}
+      >
         <h1>Niya</h1>
       </Container>
-      
+
       <Scoreboard setBoard={setBoard} />
 
-      <Container className="mx-auto" style={{ marginTop: "10px", height: '840px', width: '860px'}}>
-        <Row style={{  height: '13rem', width: '54rem' }}>
+      <Container
+        className="mx-auto"
+        style={{ marginTop: "10px", height: "840px", width: "860px" }}
+      >
+        <Row style={{ height: "13rem", width: "54rem" }}>
           {tiles.slice(0, 4).map((tile) => row(tile))}
         </Row>
-        <Row style={{  height: '13rem', width: '54rem' }}>
+        <Row style={{ height: "13rem", width: "54rem" }}>
           {tiles.slice(4, 8).map((tile) => row(tile))}
         </Row>
-        <Row style={{  height: '13rem', width: '54rem'  }}>
+        <Row style={{ height: "13rem", width: "54rem" }}>
           {tiles.slice(8, 12).map((tile) => row(tile))}
         </Row>
-        <Row style={{  height: '13rem', width: '54rem'  }}>
+        <Row style={{ height: "13rem", width: "54rem" }}>
           {tiles.slice(12, 16).map((tile) => row(tile))}
         </Row>
       </Container>
+      <Container>
+        <Token />
+      </Container>
 
-      <Container style={{ backgroundColor: 'pink' }}>
+      <Container style={{ backgroundColor: "pink" }}>
         <Rules />
       </Container>
-      
     </>
   );
 }
