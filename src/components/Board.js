@@ -1,11 +1,9 @@
 import Tile from "./Tile";
-import Token from "./Token";
 import Rules from "./Rules";
+import PlayerTokenContainer from "./PlayerTokenContainer";
 import Scoreboard from "./Scoreboard";
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 
 // Idea: would be cool to use useContexts/useReducer hooks in place of Redux
 
@@ -65,27 +63,35 @@ function Board() {
 
       <Scoreboard setBoard={setBoard} />
 
-      <Container
-        className="mx-auto"
-        style={{ marginTop: "10px", height: "840px", width: "860px" }}
-      >
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(0, 4).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(4, 8).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(8, 12).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(12, 16).map((tile) => row(tile))}
-        </Row>
-      </Container>
+      <Row >
+        <PlayerTokenContainer />
+        <Col>
+          <Container
+            className="mx-auto"
+            style={{ marginTop: "10px", height: "840px", width: "860px"}}
+          >
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(0, 4).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(4, 8).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(8, 12).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(12, 16).map((tile) => row(tile))}
+            </Row>
+          </Container>
+        </Col>
+        <PlayerTokenContainer />
+      </Row>
 
       <Container style={{ backgroundColor: "pink" }}>
         <Rules />
       </Container>
+
+      
     </>
   );
 }
