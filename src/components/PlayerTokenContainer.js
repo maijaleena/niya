@@ -2,17 +2,27 @@ import React from "react";
 import { Container, Col, ModalTitle } from "react-bootstrap";
 import Token from "./Token";
 
-function PlayerTokenContainer() {
+function PlayerTokenContainer(player) {
+  player = player.player
+  let tokenCount = player.tokenCount
+
+
+  const tokenList = (num) => {
+    const tokens=[]
+    for (let i=0;i<num;i++) {
+          tokens.push(<Token player={player}/>)
+    }
+    return tokens
+  }
+
+
   return (
     <Col style={{ backgroundColor:"pink" }}>
       <ModalTitle style={{backgroundColor: 'grey', textAlign:"center"  }}> 
-        Player One's Tokens
+        {player.name}'s Tokens
       </ModalTitle>
       <Container>
-        <Token/>
-        <Token/>
-        <Token/>
-        <Token/>
+        {tokenList(tokenCount)}       
       </Container>
     </Col>
   );

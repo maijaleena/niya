@@ -3,7 +3,8 @@ import { Container } from "react-bootstrap";
 import Draggable from "react-draggable";
 import React, { useEffect, useState } from "react";
 
-function Token() {
+function Token(player) {
+  player = player.player
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const DraggableEventHandler = async (data) => {
@@ -25,7 +26,7 @@ function Token() {
         className="d-flex justify-content-center align-items-center"
         style={{ height: "12rem", width: "12rem", backgroundColor: "darkred" }}
       >
-        <AiOutlineCoffee />
+        <AiOutlineCoffee /> {player.name}
       </Container>
     </Draggable>
   );

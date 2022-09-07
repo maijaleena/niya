@@ -9,23 +9,32 @@ import React, { useState, useEffect } from "react";
 
 function Board() {
   const [tiles, setTiles] = useState([
-    "1A",
-    "2A",
-    "3A",
-    "4A",
-    "1B",
-    "2B",
-    "3B",
-    "4B",
-    "1C",
-    "2C",
-    "3C",
-    "4C",
-    "1D",
-    "2D",
-    "3D",
-    "4D",
+    [1,5],
+    [2,5],
+    [3,5],
+    [4,5],
+    [1,6],
+    [2,6],
+    [3,6],
+    [4,6],
+    [1,7],
+    [2,7],
+    [3,7],
+    [4,7],      
+    [1,8],
+    [2,8],
+    [3,8],
+    [4,8],
   ]);
+  const [players, setPlayers] = useState(
+    [
+      {"name":"Player 1","tokenCount": 8},
+      {"name":"Player 2","tokenCount": 8}
+      ]
+  )
+  const [currentTile, setCurrentTile] = useState(null)
+  const [firstTurn, setFirstTurn] = useState(true)
+  const [playerTurn, setPlayerTurn] = useState(players[0])
 
   function shuffleBoard(array) {
     for (var i = array.length - 1; i > 0; i--) {
@@ -44,13 +53,26 @@ function Board() {
     setTiles(randomizedBoard.slice());
   };
 
+  const setCurrTile= (tile) => {
+    setCurrentTile(tile)
+    const index = tiles.indexOf(tile);
+    tiles[index] = "Token"
+    setTiles(tiles)
+    switchPlayer()
+  }
+
+  const switchPlayer = () => {
+    setPlayerTurn(playerTurn===players[0] ? players[1] : players[0])
+  }
+
   const row = (tile) => {
     return (
       <Col key={tile} style={{ width: "w-25" }}>
-        <Tile tile={tile} />
+        <Tile setCurrTile={setCurrTile} tile={tile} />
       </Col>
     );
   };
+
 
   return (
     <>
@@ -60,11 +82,9 @@ function Board() {
       >
         <h1>Niya</h1>
       </Container>
-
-      <Scoreboard setBoard={setBoard} />
-
+      <Scoreboard playerTurn={playerTurn} currentTile={currentTile} setBoard={setBoard} />
       <Row >
-        <PlayerTokenContainer />
+        <PlayerTokenContainer player={players[0]} />
         <Col>
           <Container
             className="mx-auto"
@@ -84,7 +104,7 @@ function Board() {
             </Row>
           </Container>
         </Col>
-        <PlayerTokenContainer />
+        <PlayerTokenContainer player={players[1]} />
       </Row>
 
       <Container style={{ backgroundColor: "pink" }}>
