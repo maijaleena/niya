@@ -7,6 +7,8 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+// Idea: would be cool to use useContexts/useReducer hooks in place of Redux
+
 function Board() {
   const [tiles, setTiles] = useState([
     "1A",
@@ -37,7 +39,7 @@ function Board() {
     return array;
   }
 
-  //explanation for setBoard function: For React to recognize that there was a change in the board and re-render, I had to use the .slice() function. Basically, .slice() "copies" the array, and while doing so, it changes the references of the array without changing the content. Without .slice(), even though the contents were changed, but the references don't change under the hood, so React doesn't recognize it as a change to the state. React only recognizes changes to references as changes (in terms of re-rendering)
+  //explanation for setBoard function: For React to recognize that there was a change in the board and re-render, I had to use the .slice() function. Basically, .slice() "copies" the array, and while doing so, it changes the references of the array without changing the content. Without .slice(), even though the contents were changed, the references don't change under the hood, so React doesn't recognize it as a change to the state. React only recognizes changes to references as changes (in terms of re-rendering)
 
   const setBoard = () => {
     let randomizedBoard = shuffleBoard(tiles);
@@ -46,7 +48,7 @@ function Board() {
 
   const row = (tile) => {
     return (
-      <Col style={{ width: "w-25" }}>
+      <Col key={tile} style={{ width: "w-25" }}>
         <Tile tile={tile} />
       </Col>
     );
