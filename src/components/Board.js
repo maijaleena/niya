@@ -4,11 +4,12 @@ import PlayerTokenContainer from "./PlayerTokenContainer";
 import Scoreboard from "./Scoreboard";
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 // Idea: would be cool to use useContexts/useReducer hooks in place of Redux
 
 function Board() {
-  const [tiles, setTiles] = useState([
+  const [tiles, setTiles] = useLocalStorage("board", [
     [1, 5],
     [2, 5],
     [3, 5],
