@@ -1,0 +1,20 @@
+To dos:
+- board should already be shuffled before tiles appear (or when it's opened)
+- setBoard should not be allowed after the game starts
+- Only allow a player's token to be moveable if it is their turn
+- When a token is dropped on a tile, swap it for the token on the board and remove one from the player's object (tokenCount)
+- Don't allow a token to be selected as the currentTile 
+- Don't allow token under Player's Turn to be moveable
+- Fix glitch where random tiles appear under the other tiles when you click too much
+- Only allow tile to be selected if it meets the constraints
+    - note: I changed it to arrays of two numbers. Each number represents a picture.
+    - so to check if it is acceptable, we need to check if at least one num is a match with the currentTile
+
+
+Like way later...
+- figure out winning board
+    - 4 diagonal
+    - 4 straight line
+    - 4 box
+    - other player has no valid moves
+- first turn should only be allowed to select perimeter tiles

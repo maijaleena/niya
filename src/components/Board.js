@@ -1,34 +1,38 @@
 import Tile from "./Tile";
-import Token from "./Token";
 import Rules from "./Rules";
+import PlayerTokenContainer from "./PlayerTokenContainer";
 import Scoreboard from "./Scoreboard";
 import { Container, Col, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 // Idea: would be cool to use useContexts/useReducer hooks in place of Redux
 
 function Board() {
-  const [tiles, setTiles] = useLocalStorage("board", [
-    "1A",
-    "2A",
-    "3A",
-    "4A",
-    "1B",
-    "2B",
-    "3B",
-    "4B",
-    "1C",
-    "2C",
-    "3C",
-    "4C",
-    "1D",
-    "2D",
-    "3D",
-    "4D",
+  const [tiles, setTiles] = useState([
+    [1, 5],
+    [2, 5],
+    [3, 5],
+    [4, 5],
+    [1, 6],
+    [2, 6],
+    [3, 6],
+    [4, 6],
+    [1, 7],
+    [2, 7],
+    [3, 7],
+    [4, 7],
+    [1, 8],
+    [2, 8],
+    [3, 8],
+    [4, 8],
   ]);
+  const [players, setPlayers] = useState([
+    { name: "Player 1", tokenCount: 8 },
+    { name: "Player 2", tokenCount: 8 },
+  ]);
+  const [currentTile, setCurrentTile] = useState(null);
+  const [firstTurn, setFirstTurn] = useState(true);
+  const [playerTurn, setPlayerTurn] = useState(players[0]);
 
   function shuffleBoard(array) {
     for (var i = array.length - 1; i > 0; i--) {
@@ -47,10 +51,22 @@ function Board() {
     setTiles(randomizedBoard.slice());
   };
 
+  const setCurrTile = (tile) => {
+    setCurrentTile(tile);
+    const index = tiles.indexOf(tile);
+    tiles[index] = "Token";
+    setTiles(tiles);
+    switchPlayer();
+  };
+
+  const switchPlayer = () => {
+    setPlayerTurn(playerTurn === players[0] ? players[1] : players[0]);
+  };
+
   const row = (tile) => {
     return (
       <Col key={tile} style={{ width: "w-25" }}>
-        <Tile tile={tile} />
+        <Tile setCurrTile={setCurrTile} tile={tile} />
       </Col>
     );
   };
@@ -63,26 +79,34 @@ function Board() {
       >
         <h1>Niya</h1>
       </Container>
-
-      <Scoreboard setBoard={setBoard} />
-
-      <Container
-        className="mx-auto"
-        style={{ marginTop: "10px", height: "840px", width: "860px" }}
-      >
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(0, 4).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(4, 8).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(8, 12).map((tile) => row(tile))}
-        </Row>
-        <Row style={{ height: "13rem", width: "54rem" }}>
-          {tiles.slice(12, 16).map((tile) => row(tile))}
-        </Row>
-      </Container>
+      <Scoreboard
+        playerTurn={playerTurn}
+        currentTile={currentTile}
+        setBoard={setBoard}
+      />
+      <Row>
+        <PlayerTokenContainer player={players[0]} />
+        <Col>
+          <Container
+            className="mx-auto"
+            style={{ marginTop: "10px", height: "840px", width: "860px" }}
+          >
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(0, 4).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(4, 8).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(8, 12).map((tile) => row(tile))}
+            </Row>
+            <Row style={{ height: "13rem", width: "54rem" }}>
+              {tiles.slice(12, 16).map((tile) => row(tile))}
+            </Row>
+          </Container>
+        </Col>
+        <PlayerTokenContainer player={players[1]} />
+      </Row>
 
       <Container style={{ backgroundColor: "pink" }}>
         <Rules />
